@@ -1,5 +1,5 @@
 from PIL import Image
-import google.generativeai as genai
+import google_generativeai as genai
 
 genai.configure(api_key="AIzaSyAYul_7VsT2qN3Ho_m0FIt8wQGpsSe72Cc")
 
