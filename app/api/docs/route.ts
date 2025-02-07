@@ -13,10 +13,18 @@ export async function GET(request: Request) {
     }
 
     const filePath = path.join(process.cwd(), 'public/docs', `${file}.md`);
+    console.log('Looking for file at:', filePath);
     
     if (!existsSync(filePath)) {
       console.error(`File not found: ${filePath}`);
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+      // List available files
+      const availableFiles = require('fs').readdirSync(path.join(process.cwd(), 'public/docs'));
+      console.log('Available files:', availableFiles);
+      return NextResponse.json({ 
+        error: 'File not found',
+        requestedPath: filePath,
+        availableFiles 
+      }, { status: 404 });
     }
 
     const content = await readFile(filePath, 'utf8');

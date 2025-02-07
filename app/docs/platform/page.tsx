@@ -5,16 +5,45 @@ const PlatformDocumentationPage: FC = async () => {
   try {
     const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
     
-    const platformContent = await fetch(`${baseUrl}/api/docs?file=platform_how-2`, { cache: 'no-store' }).then(res => {
-      if (!res.ok) throw new Error(`Failed to fetch platform docs: ${res.status}`);
+    // Add console.log to debug file paths
+    console.log('Attempting to fetch from:', `${baseUrl}/api/docs?file=platform_how-2`);
+    
+    const platformContent = await fetch(`${baseUrl}/api/docs?file=platform_how-2`, { 
+      cache: 'no-store',
+      headers: {
+        'Accept': 'text/markdown'
+      }
+    }).then(async res => {
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(`Failed to fetch platform docs: ${res.status} - ${error}`);
+      }
       return res.text();
     });
-    const authContent = await fetch(`${baseUrl}/api/docs?file=auth_how-2`, { cache: 'no-store' }).then(res => {
-      if (!res.ok) throw new Error(`Failed to fetch auth docs: ${res.status}`);
+
+    const authContent = await fetch(`${baseUrl}/api/docs?file=auth_how-2`, {
+      cache: 'no-store',
+      headers: {
+        'Accept': 'text/markdown'
+      }
+    }).then(async res => {
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(`Failed to fetch auth docs: ${res.status} - ${error}`);
+      }
       return res.text();
     });
-    const aiContent = await fetch(`${baseUrl}/api/docs?file=ai-how-2`, { cache: 'no-store' }).then(res => {
-      if (!res.ok) throw new Error(`Failed to fetch AI docs: ${res.status}`);
+
+    const aiContent = await fetch(`${baseUrl}/api/docs?file=ai-how-2`, {
+      cache: 'no-store',
+      headers: {
+        'Accept': 'text/markdown'
+      }
+    }).then(async res => {
+      if (!res.ok) {
+        const error = await res.text();
+        throw new Error(`Failed to fetch AI docs: ${res.status} - ${error}`);
+      }
       return res.text();
     });
 
