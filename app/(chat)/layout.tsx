@@ -24,7 +24,17 @@ export default async function Layout({
       />
       <SidebarProvider defaultOpen={!isCollapsed}>
         <AppSidebar user={session?.user} />
-        <SidebarInset>{children}</SidebarInset>
+        <SidebarInset>
+          <div className="flex flex-col h-full">
+            <div className="flex-grow overflow-auto">{children}</div>
+            <div className="border-t p-2 text-sm text-muted-foreground">
+              Powered by AI and Open Source Innovation
+            </div>
+            <div className="p-2 text-xs text-muted-foreground">
+              Platform Overview: Integrating Open-Source Services
+            </div>
+          </div>
+        </SidebarInset>
       </SidebarProvider>
     </>
   );
