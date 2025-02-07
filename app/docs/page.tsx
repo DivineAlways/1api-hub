@@ -32,8 +32,10 @@ async function fetchDoc(filename: string) {
 const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
+  let content: string = ''; // Initialize content as an empty string
+
   try {
-    const content = await fetchDoc('documentation.md');
+    content = await fetchDoc('documentation.md');
     
     handleUnexpectedValue(content, 'string'); // Check if content is a string
 
