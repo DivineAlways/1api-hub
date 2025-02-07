@@ -5,7 +5,7 @@ const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
   try {
-    const platformContent = await fetch(`/api/docs?file=platform_how-2`, { 
+    const platformContent = await fetch(`http://localhost:3000/api/docs?file=platform_how-2`, { 
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -18,7 +18,7 @@ const DocumentationPage: FC = async () => {
       return res.text();
     });
 
-    const authContent = await fetch(`/api/docs?file=auth_how-2`, {
+    const authContent = await fetch(`http://localhost:3000/api/docs?file=auth_how-2`, {
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -31,7 +31,7 @@ const DocumentationPage: FC = async () => {
       return res.text();
     });
 
-    const aiContent = await fetch(`/api/docs?file=ai-how-2`, {
+    const aiContent = await fetch(`http://localhost:3000/api/docs?file=ai-how-2`, {
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
