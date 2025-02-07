@@ -9,8 +9,6 @@ async function fetchDoc(filename: string) {
     
   const url = new URL('/api/docs', baseUrl);
   url.searchParams.set('file', filename);
-  
-  console.log(`Fetching documentation from: ${url.toString()}`); // Log the URL being fetched
 
   const res = await fetch(url, {
     cache: 'no-store',
@@ -20,25 +18,22 @@ async function fetchDoc(filename: string) {
   });
   
   if (!res.ok) {
-    console.error(`Failed to fetch ${filename}: ${res.status}`); // Log the error status
+    console.error(`Failed to fetch ${filename}: ${res.status}`);
     throw new Error(`Failed to fetch ${filename}: ${res.status}`);
   }
   
   const text = await res.text();
-  console.log(`Fetched content: ${text}`); // Log the fetched content
-  return text.replace(/<[^>]*>/g, ''); // Strip any HTML tags
+  return text.replace(/<[^>]*>/g, '');
 }
 
 const DocumentationPage: FC = async () => {
-  console.log('Attempting to fetch docs...');
-  
-  let content: string = ''; // Initialize content as an empty string
+  let content: string = '';
 
   try {
     const fetchedContent = await fetchDoc('documentation.md');
     
-    handleUnexpectedValue(fetchedContent, 'string'); // Check if content is a string
-    content = fetchedContent || 'No content available.'; // Assign fetched content or fallback message
+    handleUnexpectedValue(fetchedContent, 'string');
+    content = fetchedContent || 'No content available.';
 
     return (
       <div className="container mx-auto p-6">
@@ -62,7 +57,7 @@ const DocumentationPage: FC = async () => {
                 }
               }}
             >
-              {content.length > 0 ? content : 'No content available.'} {/* Conditional rendering for content */}
+              {content.length > 0 ? content : 'No content available.'}
             </Markdown>
           </div>
         </div>
