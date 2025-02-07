@@ -32,7 +32,7 @@ async function fetchDoc(filename: string) {
 const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
-  let content: string = ''; // Initialize content as an empty string
+  let content: string | null = null; // Initialize content as null
 
   try {
     content = await fetchDoc('documentation.md');
@@ -61,7 +61,7 @@ const DocumentationPage: FC = async () => {
                 }
               }}
             >
-              {content} {/* Pass the raw content directly to Markdown */}
+              {content || 'No content available.'} {/* Provide a fallback message */}
             </Markdown>
           </div>
         </div>
