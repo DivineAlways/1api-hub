@@ -62,7 +62,7 @@ const DocumentationPage: FC = async () => {
                 }
               }}
             >
-              {content} {/* Pass the raw content directly to Markdown */}
+              {content ?? 'No content available.'} {/* Pass the raw content directly to Markdown */}
             </Markdown>
           </div>
         </div>
