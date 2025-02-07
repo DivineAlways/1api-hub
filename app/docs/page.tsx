@@ -52,21 +52,61 @@ const DocumentationPage: FC = async () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Platform Overview</h2>
             <div className="markdown-content">
-              <Markdown>{platformContent}</Markdown>
+              <Markdown components={{
+                // Override how code blocks are rendered
+                code: ({node, inline, className, children, ...props}) => {
+                  if (inline) {
+                    return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+                  }
+                  return (
+                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                      <code {...props}>{children}</code>
+                    </pre>
+                  )
+                }
+              }}>
+                {platformContent}
+              </Markdown>
             </div>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Authentication System</h2>
             <div className="markdown-content">
-              <Markdown>{authContent}</Markdown>
+              <Markdown components={{
+                code: ({node, inline, className, children, ...props}) => {
+                  if (inline) {
+                    return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+                  }
+                  return (
+                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                      <code {...props}>{children}</code>
+                    </pre>
+                  )
+                }
+              }}>
+                {authContent}
+              </Markdown>
             </div>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">AI Integration</h2>
             <div className="markdown-content">
-              <Markdown>{aiContent}</Markdown>
+              <Markdown components={{
+                code: ({node, inline, className, children, ...props}) => {
+                  if (inline) {
+                    return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+                  }
+                  return (
+                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                      <code {...props}>{children}</code>
+                    </pre>
+                  )
+                }
+              }}>
+                {aiContent}
+              </Markdown>
             </div>
           </section>
         </div>
@@ -84,46 +124,29 @@ const DocumentationPage: FC = async () => {
     );
   }
   try {
-    console.log('Attempting to fetch docs...');
-    
-    const platformContent = await fetch(`http://localhost:3000/api/docs?file=platform_how-2`, { 
-      cache: 'no-store',
-      headers: {
-        'Accept': 'text/markdown'
-      }
-    }).then(async res => {
+    const fetchDoc = async (filename: string) => {
+      const res = await fetch(`http://localhost:3000/api/docs?file=${filename}`, {
+        cache: 'no-store',
+        headers: {
+          'Accept': 'text/markdown'
+        }
+      });
+      
       if (!res.ok) {
         const error = await res.text();
-        throw new Error(`Failed to fetch platform docs: ${res.status} - ${error}`);
+        throw new Error(`Failed to fetch ${filename}: ${res.status} - ${error}`);
       }
-      return res.text();
-    });
+      
+      const text = await res.text();
+      // Remove any HTML tags that might be in the markdown
+      return text.replace(/<[^>]*>/g, '');
+    };
 
-    const authContent = await fetch(`http://localhost:3000/api/docs?file=auth_how-2`, {
-      cache: 'no-store',
-      headers: {
-        'Accept': 'text/markdown'
-      }
-    }).then(async res => {
-      if (!res.ok) {
-        const error = await res.text();
-        throw new Error(`Failed to fetch auth docs: ${res.status} - ${error}`);
-      }
-      return res.text();
-    });
-
-    const aiContent = await fetch(`http://localhost:3000/api/docs?file=ai-how-2`, {
-      cache: 'no-store',
-      headers: {
-        'Accept': 'text/markdown'
-      }
-    }).then(async res => {
-      if (!res.ok) {
-        const error = await res.text();
-        throw new Error(`Failed to fetch AI docs: ${res.status} - ${error}`);
-      }
-      return res.text();
-    });
+    const [platformContent, authContent, aiContent] = await Promise.all([
+      fetchDoc('platform_how-2'),
+      fetchDoc('auth_how-2'), 
+      fetchDoc('ai-how-2')
+    ]);
 
     return (
       <div className="container mx-auto p-6">
