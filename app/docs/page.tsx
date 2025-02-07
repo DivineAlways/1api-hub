@@ -5,36 +5,10 @@ const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
   try {
-    const fetchDoc = async (filename: string) => {
-      const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
-      const url = new URL('/api/docs', baseUrl || 'http://localhost:3000');
-      url.searchParams.set('file', filename);
-      
-      const res = await fetch(url, {
-        cache: 'no-store',
-        headers: {
-          'Accept': 'text/markdown'
-        }
-      });
-      
-      if (!res.ok) {
-        const error = await res.text();
-        throw new Error(`Failed to fetch ${filename}: ${res.status} - ${error}`);
-      }
-      
-      const text = await res.text();
-      return text.replace(/<[^>]*>/g, '');
-    };
-
-    // Fetch all documentation content
-    const [platformContent, authContent, aiContent] = await Promise.all([
-      fetchDoc('platform_how-2'),
-      fetchDoc('auth_how-2'), 
-      fetchDoc('ai-how-2')
-    ]);
-
-    if (!platformContent || !authContent || !aiContent) {
-      throw new Error('Failed to load one or more documentation sections');
+    const content = await fetchDoc('documentation');
+    
+    if (!content) {
+      throw new Error('Failed to load documentation');
     }
 
 
