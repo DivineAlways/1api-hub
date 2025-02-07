@@ -3,9 +3,9 @@ import Markdown from 'react-markdown';
 
 const PlatformDocumentationPage: FC = async () => {
   try {
-    const platformContent = await fetch('/docs/platform_how-2.md').then(res => res.text());
-    const authContent = await fetch('/docs/auth_how-2.md').then(res => res.text());
-    const aiContent = await fetch('/docs/ai-how-2.md').then(res => res.text());
+    const platformContent = await fetch('/api/docs?file=platform_how-2').then(res => res.text());
+    const authContent = await fetch('/api/docs?file=auth_how-2').then(res => res.text());
+    const aiContent = await fetch('/api/docs?file=ai-how-2').then(res => res.text());
 
     return (
       <div className="container mx-auto p-6">
