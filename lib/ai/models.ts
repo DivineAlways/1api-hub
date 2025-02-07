@@ -18,6 +18,10 @@ export const myProvider = customProvider({
     }),
     'title-model': openai('gpt-3.5-turbo'),
     'block-model': openai('gpt-4o-mini'),
+    'gemini-2.0-flash-exp': openai('gemini-2.0-flash-exp'),
+    'gemini-1.5-pro': openai('Gemini-1.5-pro'),
+    'gemini-flash': openai('gemini-2.0-flash-exp'),
+    'gemini-pro': openai('Gemini-1.5-pro'),
   },
   imageModels: {
     'small-model': openai.image('dall-e-3'),

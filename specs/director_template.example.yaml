@@ -1,0 +1,44 @@
+# The prompt that describes what changes need to be made to the codebase
+prompt: |
+   UPDATE  docs/page.tsx
+      figure out how to make the page render up documentation.md
+      follow the layout.tsx to make sure the page is styled correctly
+
+    UPDATE  public/docs/documentation.md
+      make sure to include the core functionality and expanding the platform sections
+     
+              
+
+
+# The model to use for code generation
+# Supported models: any aider supported model
+coder_model: gpt-4o-mini
+
+# List of files that can be modified by the AI
+context_editable:
+  - /home/dantee/api-hub/1api-hub/app/docs/page.tsx 
+  - /home/dantee/api-hub/1api-hub/public/docs/documentation.md 
+  - /home/dantee/api-hub/1api-hub/app/layout.tsx
+  
+  
+
+# List of files that provide context but cannot be modified
+context_read_only:
+  - /home/dantee/api-hub/1api-hub/app/layout.tsx
+
+
+# Command to run tests/validation
+# Example: "pytest tests/" or "python -m unittest"
+execution_command: uv run pytest tests/page_test.py --disable-warnings
+
+# Maximum number of attempts to generate correct code
+# Recommended range: 3-10
+max_iterations: 5
+
+# The model to use for code evaluation
+# Reasoning models are recommended
+evaluator_model: gpt-4o-mini
+
+# Evaluator type to use
+# Currently only supports: "default" 
+evaluator: default

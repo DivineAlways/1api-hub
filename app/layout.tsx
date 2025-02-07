@@ -7,8 +7,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chat.vercel.ai'),
-  title: 'Next.js Chatbot Template',
-  description: 'Next.js chatbot template using the AI SDK.',
+  title: 'Low Perry Community Hub',
+  description: 'plaoform for the community',
 };
 
 export const viewport = {
@@ -46,10 +46,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="default-src 'self' http://localhost:3000 https://*.vercel.app; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://localhost:3000 https://*.vercel.app;"
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: THEME_COLOR_SCRIPT,

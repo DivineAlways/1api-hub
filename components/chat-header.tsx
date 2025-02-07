@@ -72,10 +72,10 @@ function PureChatHeader({
         asChild
       >
         <Link
-          href="/documentation"
-          target="_noblank"
+          href="/home/dantee/api-hub/1api-hub/app/docs/api/docs/route.ts"
+          target="_blank"
         >
-          Documentation
+          Platform Docs
         </Link>
       </Button>
     </header>
