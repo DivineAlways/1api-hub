@@ -28,7 +28,7 @@ const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
   try {
-    const content = await fetchDoc('documentation');
+    const content = await fetchDoc('documentation.md');
     
     if (!content) {
       throw new Error('Failed to load documentation');
