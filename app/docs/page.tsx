@@ -2,15 +2,26 @@ import { FC } from 'react';
 import Markdown from 'react-markdown';
 
 async function fetchDoc(filename: string) {
-  const res = await fetch(`/api/docs?file=${filename}`, {
-    cache: 'no-store'
+  const baseUrl = process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : 'http://localhost:3000';
+    
+  const url = new URL('/api/docs', baseUrl);
+  url.searchParams.set('file', filename);
+  
+  const res = await fetch(url, {
+    cache: 'no-store',
+    headers: {
+      'Accept': 'text/markdown'
+    }
   });
   
   if (!res.ok) {
     throw new Error(`Failed to fetch ${filename}: ${res.status}`);
   }
   
-  return res.text();
+  const text = await res.text();
+  return text.replace(/<[^>]*>/g, ''); // Strip any HTML tags
 }
 
 const DocumentationPage: FC = async () => {
