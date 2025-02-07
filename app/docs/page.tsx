@@ -26,9 +26,16 @@ const DocumentationPage: FC = async () => {
       return text.replace(/<[^>]*>/g, '');
     };
 
-    const platformContent = await fetchDoc('platform_how-2');
-    const authContent = await fetchDoc('auth_how-2');
-    const aiContent = await fetchDoc('ai-how-2');
+    // Fetch all documentation content
+    const [platformContent, authContent, aiContent] = await Promise.all([
+      fetchDoc('platform_how-2'),
+      fetchDoc('auth_how-2'), 
+      fetchDoc('ai-how-2')
+    ]);
+
+    if (!platformContent || !authContent || !aiContent) {
+      throw new Error('Failed to load one or more documentation sections');
+    }
 
 
     return (
@@ -39,22 +46,22 @@ const DocumentationPage: FC = async () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Platform Overview</h2>
             <div className="markdown-content">
-              <Markdown components={{
-                // Override how code blocks are rendered
-                code: ({node, inline, className, children, ...props}) => {
-                  if (inline) {
-                    return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+              <Markdown
+                components={{
+                  code: ({node, inline, className, children, ...props}) => {
+                    if (inline) {
+                      return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+                    }
+                    return (
+                      <div className="not-prose">
+                        <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                          <code {...props}>{children}</code>
+                        </pre>
+                      </div>
+                    );
                   }
-                  const codeBlock = (
-                    <div className="not-prose">
-                      <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
-                        <code {...props}>{children}</code>
-                      </pre>
-                    </div>
-                  );
-                  return codeBlock;
-                }
-              }}>
+                }}
+              >
                 {platformContent}
               </Markdown>
             </div>
@@ -63,18 +70,22 @@ const DocumentationPage: FC = async () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Authentication System</h2>
             <div className="markdown-content">
-              <Markdown components={{
-                code: ({node, inline, className, children, ...props}) => {
-                  if (inline) {
-                    return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+              <Markdown
+                components={{
+                  code: ({node, inline, className, children, ...props}) => {
+                    if (inline) {
+                      return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+                    }
+                    return (
+                      <div className="not-prose">
+                        <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                          <code {...props}>{children}</code>
+                        </pre>
+                      </div>
+                    );
                   }
-                  return (
-                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
-                      <code {...props}>{children}</code>
-                    </pre>
-                  )
-                }
-              }}>
+                }}
+              >
                 {authContent}
               </Markdown>
             </div>
@@ -83,18 +94,22 @@ const DocumentationPage: FC = async () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">AI Integration</h2>
             <div className="markdown-content">
-              <Markdown components={{
-                code: ({node, inline, className, children, ...props}) => {
-                  if (inline) {
-                    return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+              <Markdown
+                components={{
+                  code: ({node, inline, className, children, ...props}) => {
+                    if (inline) {
+                      return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
+                    }
+                    return (
+                      <div className="not-prose">
+                        <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                          <code {...props}>{children}</code>
+                        </pre>
+                      </div>
+                    );
                   }
-                  return (
-                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
-                      <code {...props}>{children}</code>
-                    </pre>
-                  )
-                }
-              }}>
+                }}
+              >
                 {aiContent}
               </Markdown>
             </div>
