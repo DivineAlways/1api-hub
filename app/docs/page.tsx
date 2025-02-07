@@ -34,8 +34,6 @@ const DocumentationPage: FC = async () => {
       throw new Error('Failed to load documentation');
     }
 
-    const processedContent = await Markdown(content); // Call the markdown function on the fetched text
-
     return (
       <div className="container mx-auto p-6">
         <h1 className="text-3xl font-bold mb-6">Platform Documentation</h1>
@@ -58,7 +56,7 @@ const DocumentationPage: FC = async () => {
                 }
               }}
             >
-              {processedContent}
+              {content} {/* Pass the raw content directly to Markdown */}
             </Markdown>
           </div>
         </div>
