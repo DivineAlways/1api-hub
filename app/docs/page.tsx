@@ -29,17 +29,6 @@ const DocumentationPage: FC = async () => {
     const platformContent = await fetchDoc('platform_how-2');
     const authContent = await fetchDoc('auth_how-2');
     const aiContent = await fetchDoc('ai-how-2');
-      cache: 'no-store',
-      headers: {
-        'Accept': 'text/markdown'
-      }
-    }).then(async res => {
-      if (!res.ok) {
-        const error = await res.text();
-        throw new Error(`Failed to fetch platform docs: ${res.status} - ${error}`);
-      }
-      return res.text();
-    });
 
 
     return (
@@ -124,30 +113,6 @@ const DocumentationPage: FC = async () => {
       </div>
     );
   }
-  try {
-    const fetchDoc = async (filename: string) => {
-      const res = await fetch(`http://localhost:3000/api/docs?file=${filename}`, {
-        cache: 'no-store',
-        headers: {
-          'Accept': 'text/markdown'
-        }
-      });
-      
-      if (!res.ok) {
-        const error = await res.text();
-        throw new Error(`Failed to fetch ${filename}: ${res.status} - ${error}`);
-      }
-      
-      const text = await res.text();
-      // Remove any HTML tags that might be in the markdown
-      return text.replace(/<[^>]*>/g, '');
-    };
-
-    const [platformContent, authContent, aiContent] = await Promise.all([
-      fetchDoc('platform_how-2'),
-      fetchDoc('auth_how-2'), 
-      fetchDoc('ai-how-2')
-    ]);
 
     return (
       <div className="container mx-auto p-6">
