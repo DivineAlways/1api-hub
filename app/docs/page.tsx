@@ -38,7 +38,7 @@ const DocumentationPage: FC = async () => {
     const fetchedContent = await fetchDoc('documentation.md');
     
     handleUnexpectedValue(fetchedContent, 'string'); // Check if content is a string
-    content = fetchedContent; // Assign fetched content to content variable
+    content = fetchedContent || 'No content available.'; // Assign fetched content or fallback message
 
     return (
       <div className="container mx-auto p-6">
@@ -62,7 +62,7 @@ const DocumentationPage: FC = async () => {
                 }
               }}
             >
-              {content || 'No content available.'} {/* Provide a fallback message */}
+              {content} {/* Pass the raw content directly to Markdown */}
             </Markdown>
           </div>
         </div>
