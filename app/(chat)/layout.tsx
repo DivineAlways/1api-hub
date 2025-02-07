@@ -31,7 +31,7 @@ export default async function Layout({
               Powered by AI and Open Source Innovation
             </div>
             <div className="p-2 text-xs text-muted-foreground">
-              Platform Overview: Integrating Open-Source Services
+              <a href="/docs" className="hover:underline">Documentation</a> | Platform Overview
             </div>
           </div>
         </SidebarInset>

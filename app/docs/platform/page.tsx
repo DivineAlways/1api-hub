@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Markdown from 'react-markdown';
 
-const PlatformDocumentationPage: FC = async () => {
+const DocumentationPage: FC = async () => {
   try {
     console.log('Attempting to fetch docs...');
     
