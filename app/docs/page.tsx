@@ -10,6 +10,8 @@ async function fetchDoc(filename: string) {
   const url = new URL('/api/docs', baseUrl);
   url.searchParams.set('file', filename);
   
+  console.log(`Fetching documentation from: ${url.toString()}`); // Log the URL being fetched
+
   const res = await fetch(url, {
     cache: 'no-store',
     headers: {
@@ -18,10 +20,12 @@ async function fetchDoc(filename: string) {
   });
   
   if (!res.ok) {
+    console.error(`Failed to fetch ${filename}: ${res.status}`); // Log the error status
     throw new Error(`Failed to fetch ${filename}: ${res.status}`);
   }
   
   const text = await res.text();
+  console.log(`Fetched content: ${text}`); // Log the fetched content
   return text.replace(/<[^>]*>/g, ''); // Strip any HTML tags
 }
 
