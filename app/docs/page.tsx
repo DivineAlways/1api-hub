@@ -1,6 +1,18 @@
 import { FC } from 'react';
 import Markdown from 'react-markdown';
 
+async function fetchDoc(filename: string) {
+  const res = await fetch(`/api/docs?file=${filename}`, {
+    cache: 'no-store'
+  });
+  
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ${filename}: ${res.status}`);
+  }
+  
+  return res.text();
+}
+
 const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
