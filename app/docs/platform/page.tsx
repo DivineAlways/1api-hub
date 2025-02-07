@@ -6,9 +6,9 @@ import Markdown from 'react-markdown';
 const PlatformDocumentationPage: FC = async () => {
   try {
     // Change file extensions from .yaml to .md
-    const platformDocsPath = path.join(process.cwd(), 'app/docs/api/docs/platform_how-2.md');
-    const authDocsPath = path.join(process.cwd(), 'app/docs/api/docs/auth_how-2.md');
-    const aiDocsPath = path.join(process.cwd(), 'app/docs/api/docs/ai-how-2.md');
+    const platformDocsPath = path.join(process.cwd(), 'public/docs/platform_how-2.md');
+    const authDocsPath = path.join(process.cwd(), 'public/docs/auth_how-2.md');
+    const aiDocsPath = path.join(process.cwd(), 'public/docs/ai-how-2.md');
 
     console.log('Reading files from paths:', {
       platformDocsPath,
