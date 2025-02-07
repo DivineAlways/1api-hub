@@ -5,7 +5,8 @@ const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
   try {
-    const platformContent = await fetch(`http://localhost:3000/api/docs?file=platform_how-2`, { 
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
+    const platformContent = await fetch(`${baseUrl}/api/docs?file=platform_how-2`, { 
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -18,7 +19,7 @@ const DocumentationPage: FC = async () => {
       return res.text();
     });
 
-    const authContent = await fetch(`http://localhost:3000/api/docs?file=auth_how-2`, {
+    const authContent = await fetch(`${baseUrl}/api/docs?file=auth_how-2`, {
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -31,7 +32,7 @@ const DocumentationPage: FC = async () => {
       return res.text();
     });
 
-    const aiContent = await fetch(`http://localhost:3000/api/docs?file=ai-how-2`, {
+    const aiContent = await fetch(`${baseUrl}/api/docs?file=ai-how-2`, {
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -58,11 +59,14 @@ const DocumentationPage: FC = async () => {
                   if (inline) {
                     return <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props}>{children}</code>
                   }
-                  return (
-                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
-                      <code {...props}>{children}</code>
-                    </pre>
-                  )
+                  const codeBlock = (
+                    <div className="not-prose">
+                      <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4 overflow-x-auto">
+                        <code {...props}>{children}</code>
+                      </pre>
+                    </div>
+                  );
+                  return codeBlock;
                 }
               }}>
                 {platformContent}
