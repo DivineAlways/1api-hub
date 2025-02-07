@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Markdown from 'react-markdown';
+import { handleUnexpectedValue } from './error-handler';
 
 async function fetchDoc(filename: string) {
   const baseUrl = process.env.VERCEL_URL 
@@ -30,9 +31,7 @@ const DocumentationPage: FC = async () => {
   try {
     const content = await fetchDoc('documentation.md');
     
-    if (!content) {
-      throw new Error('Failed to load documentation');
-    }
+    handleUnexpectedValue(content, 'string'); // Check if content is a string
 
     return (
       <div className="container mx-auto p-6">
