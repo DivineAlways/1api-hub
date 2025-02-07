@@ -4,9 +4,9 @@ import path from 'path';
 import Markdown from 'react-markdown';
 
 const PlatformDocumentationPage: FC = async () => {
-  const platformDocsPath = path.join(process.cwd(), 'app/docs/api/docs/platform_how-2.yaml');
-  const authDocsPath = path.join(process.cwd(), 'app/docs/api/docs/auth_how-2.yaml');
-  const aiDocsPath = path.join(process.cwd(), 'app/docs/api/docs/ai-how-2.yaml');
+  const platformDocsPath = path.join(process.cwd(), 'public/docs/platform.yaml');
+  const authDocsPath = path.join(process.cwd(), 'public/docs/auth.yaml');
+  const aiDocsPath = path.join(process.cwd(), 'public/docs/ai.yaml');
 
   const platformContent = await readFile(platformDocsPath, 'utf8');
   const authContent = await readFile(authDocsPath, 'utf8');
