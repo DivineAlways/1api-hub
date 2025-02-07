@@ -62,7 +62,7 @@ const DocumentationPage: FC = async () => {
                 }
               }}
             >
-              {content ?? 'No content available.'} {/* Pass the raw content directly to Markdown */}
+              {content.length > 0 ? content : 'No content available.'} {/* Conditional rendering for content */}
             </Markdown>
           </div>
         </div>
