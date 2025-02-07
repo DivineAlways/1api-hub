@@ -3,12 +3,9 @@ import Markdown from 'react-markdown';
 
 const PlatformDocumentationPage: FC = async () => {
   try {
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    console.log('Attempting to fetch docs...');
     
-    // Add console.log to debug file paths
-    console.log('Attempting to fetch from:', `${baseUrl}/api/docs?file=platform_how-2`);
-    
-    const platformContent = await fetch(`${baseUrl}/api/docs?file=platform_how-2`, { 
+    const platformContent = await fetch(`/api/docs?file=platform_how-2`, { 
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -21,7 +18,7 @@ const PlatformDocumentationPage: FC = async () => {
       return res.text();
     });
 
-    const authContent = await fetch(`${baseUrl}/api/docs?file=auth_how-2`, {
+    const authContent = await fetch(`/api/docs?file=auth_how-2`, {
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
@@ -34,7 +31,7 @@ const PlatformDocumentationPage: FC = async () => {
       return res.text();
     });
 
-    const aiContent = await fetch(`${baseUrl}/api/docs?file=ai-how-2`, {
+    const aiContent = await fetch(`/api/docs?file=ai-how-2`, {
       cache: 'no-store',
       headers: {
         'Accept': 'text/markdown'
