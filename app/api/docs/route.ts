@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import path from 'path';
+import { existsSync } from 'fs';
 
 export async function GET(request: Request) {
   try {
@@ -12,15 +13,25 @@ export async function GET(request: Request) {
     }
 
     const filePath = path.join(process.cwd(), 'public/docs', `${file}.md`);
+    
+    if (!existsSync(filePath)) {
+      console.error(`File not found: ${filePath}`);
+      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    }
+
     const content = await readFile(filePath, 'utf8');
     
     return new NextResponse(content, {
       headers: {
         'Content-Type': 'text/markdown',
+        'Cache-Control': 'no-store',
       },
     });
   } catch (error) {
     console.error('Error reading markdown file:', error);
-    return NextResponse.json({ error: 'Failed to read file' }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Failed to read file',
+      details: error instanceof Error ? error.message : String(error)
+    }, { status: 500 });
   }
 }

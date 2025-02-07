@@ -3,9 +3,20 @@ import Markdown from 'react-markdown';
 
 const PlatformDocumentationPage: FC = async () => {
   try {
-    const platformContent = await fetch('/api/docs?file=platform_how-2').then(res => res.text());
-    const authContent = await fetch('/api/docs?file=auth_how-2').then(res => res.text());
-    const aiContent = await fetch('/api/docs?file=ai-how-2').then(res => res.text());
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    
+    const platformContent = await fetch(`${baseUrl}/api/docs?file=platform_how-2`, { cache: 'no-store' }).then(res => {
+      if (!res.ok) throw new Error(`Failed to fetch platform docs: ${res.status}`);
+      return res.text();
+    });
+    const authContent = await fetch(`${baseUrl}/api/docs?file=auth_how-2`, { cache: 'no-store' }).then(res => {
+      if (!res.ok) throw new Error(`Failed to fetch auth docs: ${res.status}`);
+      return res.text();
+    });
+    const aiContent = await fetch(`${baseUrl}/api/docs?file=ai-how-2`, { cache: 'no-store' }).then(res => {
+      if (!res.ok) throw new Error(`Failed to fetch AI docs: ${res.status}`);
+      return res.text();
+    });
 
     return (
       <div className="container mx-auto p-6">
