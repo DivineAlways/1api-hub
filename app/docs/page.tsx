@@ -48,26 +48,28 @@ const DocumentationPage: FC = async () => {
       <div className="container mx-auto p-6">
         <h1 className="text-3xl font-bold mb-6">Platform Documentation</h1>
         
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Platform Overview</h2>
-          <div className="prose dark:prose-invert max-w-none">
-            <Markdown>{platformContent}</Markdown>
-          </div>
-        </section>
+        <div className="prose dark:prose-invert max-w-none">
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Platform Overview</h2>
+            <div className="markdown-content">
+              <Markdown>{platformContent}</Markdown>
+            </div>
+          </section>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Authentication System</h2>
-          <div className="prose dark:prose-invert max-w-none">
-            <Markdown>{authContent}</Markdown>
-          </div>
-        </section>
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Authentication System</h2>
+            <div className="markdown-content">
+              <Markdown>{authContent}</Markdown>
+            </div>
+          </section>
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">AI Integration</h2>
-          <div className="prose dark:prose-invert max-w-none">
-            <Markdown>{aiContent}</Markdown>
-          </div>
-        </section>
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">AI Integration</h2>
+            <div className="markdown-content">
+              <Markdown>{aiContent}</Markdown>
+            </div>
+          </section>
+        </div>
       </div>
     );
   } catch (error) {
