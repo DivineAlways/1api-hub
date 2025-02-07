@@ -32,12 +32,13 @@ async function fetchDoc(filename: string) {
 const DocumentationPage: FC = async () => {
   console.log('Attempting to fetch docs...');
   
-  let content: string | null = null; // Initialize content as null
+  let content: string = ''; // Initialize content as an empty string
 
   try {
-    content = await fetchDoc('documentation.md');
+    const fetchedContent = await fetchDoc('documentation.md');
     
-    handleUnexpectedValue(content, 'string'); // Check if content is a string
+    handleUnexpectedValue(fetchedContent, 'string'); // Check if content is a string
+    content = fetchedContent; // Assign fetched content to content variable
 
     return (
       <div className="container mx-auto p-6">
